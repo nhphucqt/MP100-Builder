@@ -32,12 +32,20 @@ Link: https://www.tugraz.at/institute/icg/research/team-bischof/learning-recogni
 Fill out the form to get the download link, then download the dataset:
 
 ```bash
-
+mkdir AFLW
+cd AFLW
+# Download and unzip the dataset zip file and place it here
+cd ..
 ```
 
 ## Download OneHand10K dataset
 
-```bash
+Link: https://www.yangangwang.com/papers/WANG-MCC-2018-10.html
+
+Fill out the form to get the download link, then download the dataset:
+
+```
+Soon^tm (until I get the link)
 ```
 
 ## Download DeepFashion2 dataset
@@ -62,15 +70,21 @@ cd ..
 
 ## Download AP-10K dataset
 
+Link: https://github.com/AlexTheBad/AP-10K?tab=readme-ov-file#download
+
 ```bash
+gdown --fuzzy 1-FNNGcdtAQRehYYkGY1y4wzFNg4iWNad
+unzip ap-10k.zip
 ```
 
 ## Download MacaquePose dataset
 
-```bash
-```
+Link: https://www.pri.kyoto-u.ac.jp/datasets/macaquepose/index.html
 
-Vinegar Fly, Desert Locust, CUB-200, CarFusion, AnimalWeb, Keypoint-5
+```bash
+wget https://www.pri.kyoto-u.ac.jp/datasets/macaquepose/download.php -O macaquepose_v1.zip
+unzip macaquepose_v1.zip
+```
 
 ## Download Vinegar Fly and Desert Locust datasets
 
@@ -82,6 +96,8 @@ python deepposekit_loader.py
 ``` 
 
 ## Download CUB-200 dataset
+
+Link: https://www.vision.caltech.edu/datasets/cub_200_2011/
 
 ```bash
 wget https://data.caltech.edu/records/65de6-vp158/files/CUB_200_2011.tgz
@@ -119,6 +135,59 @@ Link: https://github.com/jiajunwu/3dinn
 
 ```bash
 wget http://3dinterpreter.csail.mit.edu/data/keypoint-5.zip
-unzip keypoint-5.zip
+unzip keypoint-5.zip -d keypoint5
 ```
 
+## Download MP100 annotations
+
+Link: https://github.com/orhir/PoseAnything
+
+Use the updated annotations of PoseAnything:
+
+```bash
+mkdir mp100
+cd mp100
+mkdir annotations
+cd annotations
+# Download all json file from https://drive.google.com/drive/folders/1uRyGB-P5Tc_6TmAZ6RnOi0SWjGq9b28T and place them here
+cd ../..
+```
+
+## Build the dataset
+
+After downloading all datasets, the structure should look like this:
+
+```bash
+./
+├── 300W # 300W dataset
+├── AFLW # AFLW dataset
+├── ap-10k # AP-10K dataset
+├── train2017 # COCO 2017 dataset
+├── animal_dataset_v1_clean_check # AnimalWeb dataset
+├── CUB_200_2011 # CUB-200 dataset
+├── DeepFashion2 # DeepFashion2 dataset
+├── macaquepose_v1 # MacaquePose dataset
+├── OneHand10K # OneHand10K dataset
+├── deepposekit-data # Vinegar Fly and Desert Locust datasets
+    └── datasets
+        ├── fly # Vinegar Fly dataset
+        └── locust # Desert Locust dataset
+├── carfusion_dataset # CarFusion dataset
+├── keypoint5 # Keypoint-5 dataset
+└── mp100 # MP100 dataset
+    └── annotations # Annotations for MP100 dataset
+        ├── mp100_split1_test.json
+        ├── mp100_split1_train.json
+        ├── mp100_split1_val.json
+        ├── mp100_split2_test.json
+        ├── mp100_split2_train.json
+        ├── mp100_split2_val.json
+        ├── mp100_split3_test.json
+        ├── mp100_split3_train.json
+        ├── mp100_split3_val.json
+        ├── mp100_split4_test.json
+        ├── mp100_split4_train.json
+        ├── mp100_split4_val.json
+        ├── mp100_split5_test.json
+        ├── mp100_split5_train.json
+        └── mp100_split5_val.json
