@@ -1,0 +1,371 @@
+{
+    "klipspringer_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "commonwarthog_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "dassie_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "alpaca_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "bighornsheep_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "camel_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "quokka_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "onager_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "proboscismonkey_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "pademelon_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "olivebaboon_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "germanshepherddog_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "arcticwolf_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "fallowdeer_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "grizzlybear_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "californiansealion_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "gerbil_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "capebuffalo_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "capybara_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "blackbuck_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "greyseal_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "fennecfox_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "gibbons_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "bonobo_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "chipmunk_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "ferret_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "goldenretriever_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "guanaco_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "przewalskihorse_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "gentoopenguin_face": [
+        "animal_dataset_v1_clean_check"
+    ],
+    "squirrel_body": [
+        "ap-10k/data"
+    ],
+    "rabbit_body": [
+        "ap-10k/data"
+    ],
+    "skunk_body": [
+        "ap-10k/data"
+    ],
+    "fox_body": [
+        "ap-10k/data"
+    ],
+    "lion_body": [
+        "ap-10k/data"
+    ],
+    "horse_body": [
+        "ap-10k/data"
+    ],
+    "bison_body": [
+        "ap-10k/data"
+    ],
+    "sheep_body": [
+        "ap-10k/data"
+    ],
+    "dog_body": [
+        "ap-10k/data"
+    ],
+    "panther_body": [
+        "ap-10k/data"
+    ],
+    "leopard_body": [
+        "ap-10k/data"
+    ],
+    "cheetah_body": [
+        "ap-10k/data"
+    ],
+    "bobcat_body": [
+        "ap-10k/data"
+    ],
+    "raccoon_body": [
+        "ap-10k/data"
+    ],
+    "polar_bear_body": [
+        "ap-10k/data"
+    ],
+    "panda_body": [
+        "ap-10k/data"
+    ],
+    "otter_body": [
+        "ap-10k/data"
+    ],
+    "rat_body": [
+        "ap-10k/data"
+    ],
+    "wolf_body": [
+        "ap-10k/data"
+    ],
+    "rhino_body": [
+        "ap-10k/data"
+    ],
+    "elephant_body": [
+        "ap-10k/data"
+    ],
+    "giraffe_body": [
+        "ap-10k/data"
+    ],
+    "pig_body": [
+        "ap-10k/data"
+    ],
+    "cow_body": [
+        "ap-10k/data"
+    ],
+    "hippo_body": [
+        "ap-10k/data"
+    ],
+    "spider_monkey_body": [
+        "ap-10k/data"
+    ],
+    "deer_body": [
+        "ap-10k/data"
+    ],
+    "antelope_body": [
+        "ap-10k/data"
+    ],
+    "zebra_body": [
+        "ap-10k/data"
+    ],
+    "cat_body": [
+        "ap-10k/data"
+    ],
+    "beaver_body": [
+        "ap-10k/data"
+    ],
+    "hamster_body": [
+        "ap-10k/data"
+    ],
+    "gorilla_body": [
+        "ap-10k/data"
+    ],
+    "weasel_body": [
+        "ap-10k/data"
+    ],
+    "woodpecker_body": [
+        "CUB_200_2011/images/187.American_Three_toed_Woodpecker",
+        "CUB_200_2011/images/188.Pileated_Woodpecker",
+        "CUB_200_2011/images/189.Red_bellied_Woodpecker",
+        "CUB_200_2011/images/190.Red_cockaded_Woodpecker",
+        "CUB_200_2011/images/191.Red_headed_Woodpecker",
+        "CUB_200_2011/images/192.Downy_Woodpecker"
+    ],
+    "tern_body": [
+        "CUB_200_2011/images/141.Artic_Tern",
+        "CUB_200_2011/images/142.Black_Tern",
+        "CUB_200_2011/images/143.Caspian_Tern",
+        "CUB_200_2011/images/144.Common_Tern",
+        "CUB_200_2011/images/145.Elegant_Tern",
+        "CUB_200_2011/images/146.Forsters_Tern",
+        "CUB_200_2011/images/147.Least_Tern"
+    ],
+    "grebe_body": [
+        "CUB_200_2011/images/050.Eared_Grebe",
+        "CUB_200_2011/images/051.Horned_Grebe",
+        "CUB_200_2011/images/052.Pied_billed_Grebe",
+        "CUB_200_2011/images/053.Western_Grebe"
+    ],
+    "kingfisher_body": [
+        "CUB_200_2011/images/079.Belted_Kingfisher",
+        "CUB_200_2011/images/080.Green_Kingfisher",
+        "CUB_200_2011/images/081.Pied_Kingfisher",
+        "CUB_200_2011/images/082.Ringed_Kingfisher",
+        "CUB_200_2011/images/083.White_breasted_Kingfisher"
+    ],
+    "wren_body": [
+        "CUB_200_2011/images/193.Bewick_Wren",
+        "CUB_200_2011/images/194.Cactus_Wren",
+        "CUB_200_2011/images/195.Carolina_Wren",
+        "CUB_200_2011/images/196.House_Wren",
+        "CUB_200_2011/images/197.Marsh_Wren",
+        "CUB_200_2011/images/198.Rock_Wren",
+        "CUB_200_2011/images/199.Winter_Wren"
+    ],
+    "gull_body": [
+        "CUB_200_2011/images/059.California_Gull",
+        "CUB_200_2011/images/060.Glaucous_winged_Gull",
+        "CUB_200_2011/images/061.Heermann_Gull",
+        "CUB_200_2011/images/062.Herring_Gull",
+        "CUB_200_2011/images/063.Ivory_Gull",
+        "CUB_200_2011/images/064.Ring_billed_Gull",
+        "CUB_200_2011/images/065.Slaty_backed_Gull",
+        "CUB_200_2011/images/066.Western_Gull"
+    ],
+    "sparrow_body": [
+        "CUB_200_2011/images/113.Baird_Sparrow",
+        "CUB_200_2011/images/114.Black_throated_Sparrow",
+        "CUB_200_2011/images/115.Brewer_Sparrow",
+        "CUB_200_2011/images/116.Chipping_Sparrow",
+        "CUB_200_2011/images/117.Clay_colored_Sparrow",
+        "CUB_200_2011/images/118.House_Sparrow",
+        "CUB_200_2011/images/119.Field_Sparrow",
+        "CUB_200_2011/images/120.Fox_Sparrow",
+        "CUB_200_2011/images/121.Grasshopper_Sparrow",
+        "CUB_200_2011/images/122.Harris_Sparrow",
+        "CUB_200_2011/images/123.Henslow_Sparrow",
+        "CUB_200_2011/images/124.Le_Conte_Sparrow",
+        "CUB_200_2011/images/125.Lincoln_Sparrow",
+        "CUB_200_2011/images/126.Nelson_Sharp_tailed_Sparrow",
+        "CUB_200_2011/images/127.Savannah_Sparrow",
+        "CUB_200_2011/images/128.Seaside_Sparrow",
+        "CUB_200_2011/images/129.Song_Sparrow",
+        "CUB_200_2011/images/130.Tree_Sparrow",
+        "CUB_200_2011/images/131.Vesper_Sparrow",
+        "CUB_200_2011/images/132.White_crowned_Sparrow",
+        "CUB_200_2011/images/133.White_throated_Sparrow"
+    ],
+    "warbler_body": [
+        "CUB_200_2011/images/158.Bay_breasted_Warbler",
+        "CUB_200_2011/images/159.Black_and_white_Warbler",
+        "CUB_200_2011/images/160.Black_throated_Blue_Warbler",
+        "CUB_200_2011/images/161.Blue_winged_Warbler",
+        "CUB_200_2011/images/162.Canada_Warbler",
+        "CUB_200_2011/images/163.Cape_May_Warbler",
+        "CUB_200_2011/images/164.Cerulean_Warbler",
+        "CUB_200_2011/images/165.Chestnut_sided_Warbler",
+        "CUB_200_2011/images/166.Golden_winged_Warbler",
+        "CUB_200_2011/images/167.Hooded_Warbler",
+        "CUB_200_2011/images/168.Kentucky_Warbler",
+        "CUB_200_2011/images/169.Magnolia_Warbler",
+        "CUB_200_2011/images/170.Mourning_Warbler",
+        "CUB_200_2011/images/171.Myrtle_Warbler",
+        "CUB_200_2011/images/172.Nashville_Warbler",
+        "CUB_200_2011/images/173.Orange_crowned_Warbler",
+        "CUB_200_2011/images/174.Palm_Warbler",
+        "CUB_200_2011/images/175.Pine_Warbler",
+        "CUB_200_2011/images/176.Prairie_Warbler",
+        "CUB_200_2011/images/177.Prothonotary_Warbler",
+        "CUB_200_2011/images/178.Swainson_Warbler",
+        "CUB_200_2011/images/179.Tennessee_Warbler",
+        "CUB_200_2011/images/180.Wilson_Warbler",
+        "CUB_200_2011/images/181.Worm_eating_Warbler",
+        "CUB_200_2011/images/182.Yellow_Warbler"
+    ],
+    "swivelchair": [
+        "keypoint5/swivelchair/images"
+    ],
+    "bed": [
+        "keypoint5/bed/images"
+    ],
+    "table": [
+        "keypoint5/table/images"
+    ],
+    "sofa": [
+        "keypoint5/sofa/images"
+    ],
+    "chair": [
+        "keypoint5/chair/images"
+    ],
+    "long_sleeved_outwear": [
+        "DeepFashion2/train/image"
+    ],
+    "short_sleeved_dress": [
+        "DeepFashion2/train/image"
+    ],
+    "short_sleeved_outwear": [
+        "DeepFashion2/train/image"
+    ],
+    "sling": [
+        "DeepFashion2/train/image"
+    ],
+    "sling_dress": [
+        "DeepFashion2/train/image"
+    ],
+    "long_sleeved_dress": [
+        "DeepFashion2/train/image"
+    ],
+    "vest": [
+        "DeepFashion2/train/image"
+    ],
+    "vest_dress": [
+        "DeepFashion2/train/image"
+    ],
+    "skirt": [
+        "DeepFashion2/train/image"
+    ],
+    "long_sleeved_shirt": [
+        "DeepFashion2/train/image"
+    ],
+    "shorts": [
+        "DeepFashion2/train/image"
+    ],
+    "trousers": [
+        "DeepFashion2/train/image"
+    ],
+    "short_sleeved_shirt": [
+        "DeepFashion2/train/image"
+    ],
+    "macaque_body": [
+        "macaquepose_v1/images"
+    ],
+    "human_body": [
+        "train2017"
+    ],
+    "amur_tiger_body": [
+        "AFLW/aflw/data/flickr/0",
+        "AFLW/aflw/data/flickr/2",
+        "AFLW/aflw/data/flickr/3"
+    ],
+    "locust_body": [
+        "deepposekit-data/datasets/locust/images"
+    ],
+    "fly_body": [
+        "deepposekit-data/datasets/fly/images"
+    ],
+    "human_face": [
+        "300W/trainset"
+    ],
+    "suv": [],
+    "bus": [],
+    "car": [],
+    "human_hand": []
+}
