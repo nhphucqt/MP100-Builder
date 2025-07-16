@@ -16,6 +16,8 @@ Install the required packages:
 
 ```bash
 # Python 3.10
+conda create -n mp100 python=3.10
+conda activate mp100
 pip install -r requirements.txt
 ```
 
