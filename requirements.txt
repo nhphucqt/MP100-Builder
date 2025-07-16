@@ -9,3 +9,4 @@ pycocotools
 matplotlib
 scikit-image
 xtcocotools
+tqdm
