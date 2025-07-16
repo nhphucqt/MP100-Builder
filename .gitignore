@@ -1,5 +1,5 @@
 */
 *.zip
 .env
-carfusion_to_coco/
+!visualize/
 log.txt

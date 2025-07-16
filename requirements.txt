@@ -12,3 +12,4 @@ xtcocotools
 tqdm
 gdown
 python-dotenv
+fastapi[standard]
