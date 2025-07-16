@@ -221,7 +221,7 @@ python create_dataset.py --mode create
 
 The script will find and copy the images from the downloaded datasets based on the `dir_mapping.json` file, which maps dataset names to their respective directories.
 
-This will generate the dataset in the `dataset/mp100` directory, which can then be used for training and evaluation.
+This will generate the dataset in the `mp100` directory, which can then be used for training and evaluation.
 
 Validate the dataset structure again to ensure everything is correct:
 
