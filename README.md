@@ -238,3 +238,11 @@ After creating the dataset, you can clean up the temporary directories and files
 ```bash
 sh clean.sh
 ```
+
+## Visualization
+
+To visualize the dataset, you can use the provided visualization tools. The file browser allows you to navigate through the dataset images and view annotations.
+
+```bash
+python visualize/vis.py --dataset-dir mp100 --host 0.0.0.0 --port 8000
+```

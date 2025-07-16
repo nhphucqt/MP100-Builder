@@ -1,17 +1,15 @@
+import argparse
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi import Path
+import uvicorn
 import os
 
 app = FastAPI()
 
-DATASET_DIR = "/home/dtle/camouflage/dataset/mp100"
-
-app.mount("/images", StaticFiles(directory=DATASET_DIR), name="images")
-
-templates = Jinja2Templates(directory="/home/dtle/camouflage/dataset/visualize/templates")
+templates = Jinja2Templates(directory="./visualize/templates")
 
 def safe_join(base, *paths):
     # Prevent directory traversal
@@ -38,3 +36,20 @@ def browse(request: Request, subpath: str = ""):
         "file_browser.html",
         {"request": request, "items": items, "parent": parent, "subpath": subpath}
     )
+
+print("__name__:", __name__)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--dataset-dir', type=str, help='Path to the dataset directory.')
+    parser.add_argument('--host', type=str, default='0.0.0.0', help='Host to run the server on.')
+    parser.add_argument('--port', type=int, default=8000, help='Port to run the server on.')
+    args = parser.parse_args()
+
+    DATASET_DIR = args.dataset_dir
+
+    print(f"Starting server with dataset directory: {DATASET_DIR}")
+
+    app.mount("/images", StaticFiles(directory=DATASET_DIR), name="images")
+
+    uvicorn.run("__main__:app", host=args.host, port=args.port, log_level="info")
