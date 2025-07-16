@@ -1,11 +1,21 @@
 # MP100 dataset builder
 
+This script provides instructions to download and prepare various datasets used in the MP100 project. It includes steps for downloading datasets like COCO 2017, 300W, AFLW, OneHand10K, DeepFashion2, AP-10K, MacaquePose, Vinegar Fly and Desert Locust datasets, CUB-200, CarFusion, AnimalWeb, Keypoint-5, and MP100 annotations.
+
+The original instructions are available in the [MP100 repository](https://github.com/luminxu/Pose-for-Everything/tree/main/mp100).
+
 ## Preparation
 
 Create a `.env` file in the repo directory, using the provided `.example.env` as a template:
 
 ```bash
 cp dataset/.example.env dataset/.env
+```
+
+Install the required packages:
+
+```bash
+pip install -r requirements.txt
 ```
 
 ## Download COCO 2017 dataset
@@ -108,16 +118,26 @@ tar -xvzf CUB_200_2011.tgz
 
 Link: http://www.cs.cmu.edu/~ILIM/projects/IM/CarFusion/cvpr2018/index.html
 
-Fill out the form to get the google drive link, download all zip files in drive to the 'carfusion_dataset' directory, and unzip them:
+Fill out the form to get the google drive link, then clone this repository,
 
 ```bash
-mkdir carfusion_dataset
-cd carfusion_dataset
-gdown --fuzzy [google_drive_link_1]
-gdown --fuzzy [google_drive_link_2]
-...
-unzip *.zip
+git clone https://github.com/dineshreddy91/carfusion_to_coco.git
+cd carfusion_to_coco
+python download_carfusion.py # (This file need to be downloaded by requesting, please fill to get access to the data)
+sh carfusion_coco_setup.sh
 cd ..
+```
+
+Rename the images using the tool script provided by MP100 original repository:
+
+```bash
+python rename_carfusion_image.py --ann_file --img_src --write_dir
+```
+
+Fix the images names using [PoseAnything](https://github.com/orhir/PoseAnything/blob/main/tools/fix_carfuxion.py) tool script:
+
+```bash
+python fix_carfusion.py
 ```
 
 ## Download AnimalWeb dataset
@@ -167,7 +187,7 @@ After downloading all datasets, the structure should look like this:
 ├── CUB_200_2011 # CUB-200 dataset
 ├── DeepFashion2 # DeepFashion2 dataset
 ├── macaquepose_v1 # MacaquePose dataset
-├── OneHand10K # OneHand10K dataset
+├── OneHand10K # OneHand10K dataset (not available yet)
 ├── deepposekit-data # Vinegar Fly and Desert Locust datasets
     └── datasets
         ├── fly # Vinegar Fly dataset
@@ -191,3 +211,26 @@ After downloading all datasets, the structure should look like this:
         ├── mp100_split5_test.json
         ├── mp100_split5_train.json
         └── mp100_split5_val.json
+```
+
+Run the validate script to check the dataset structure:
+
+```bash
+python create_dataset.py --mode valid_org
+```
+
+If the validation passes, you can create the dataset:
+
+```bash
+python create_dataset.py --mode create
+```
+
+The script will find and copy the images from the downloaded datasets based on the `dir_mapping.json` file, which maps dataset names to their respective directories.
+
+This will generate the dataset in the `dataset/mp100` directory, which can then be used for training and evaluation.
+
+Validate the dataset structure again to ensure everything is correct:
+
+```bash
+python create_dataset.py --mode valid
+```
