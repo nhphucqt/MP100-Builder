@@ -2,3 +2,4 @@
 *.zip
 .env
 carfusion_to_coco/
+log.txt

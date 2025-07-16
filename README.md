@@ -15,6 +15,7 @@ cp dataset/.example.env dataset/.env
 Install the required packages:
 
 ```bash
+# Python 3.10
 pip install -r requirements.txt
 ```
 
@@ -123,21 +124,15 @@ Fill out the form to get the google drive link, then clone this repository,
 ```bash
 git clone https://github.com/dineshreddy91/carfusion_to_coco.git
 cd carfusion_to_coco
-python download_carfusion.py # (This file need to be downloaded by requesting, please fill to get access to the data)
+# Download the file download_carfusion.py to this dir (This file need to be downloaded by requesting, please fill to get access to the data)
 sh carfusion_coco_setup.sh
 cd ..
 ```
 
-Rename the images using the tool script provided by MP100 original repository:
+Rename the images names using [PoseAnything](https://github.com/orhir/PoseAnything/blob/main/tools/fix_carfuxion.py) tool script:
 
 ```bash
-python rename_carfusion_image.py --ann_file --img_src --write_dir
-```
-
-Fix the images names using [PoseAnything](https://github.com/orhir/PoseAnything/blob/main/tools/fix_carfuxion.py) tool script:
-
-```bash
-python fix_carfusion.py
+python fix_carfusion.py carfusion_to_coco/datasets/carfusion mp100/annotations
 ```
 
 ## Download AnimalWeb dataset
@@ -167,10 +162,9 @@ Use the updated annotations of PoseAnything:
 ```bash
 mkdir mp100
 cd mp100
-mkdir annotations
-cd annotations
-# Download all json file from https://drive.google.com/drive/folders/1uRyGB-P5Tc_6TmAZ6RnOi0SWjGq9b28T and place them here
-cd ../..
+gdown --folder https://drive.google.com/drive/folders/1uRyGB-P5Tc_6TmAZ6RnOi0SWjGq9b28T
+mv Data annotations
+cd ..
 ```
 
 ## Build the dataset
@@ -233,4 +227,12 @@ Validate the dataset structure again to ensure everything is correct:
 
 ```bash
 python create_dataset.py --mode valid
+```
+
+## Clean up
+
+After creating the dataset, you can clean up the temporary directories and files:
+
+```bash
+sh clean.sh
 ```

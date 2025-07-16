@@ -33,9 +33,10 @@ if __name__ == "__main__":
 
     carfusion_dir_path = sys.argv[1]
     mp100_dataset_path = sys.argv[2]
-    os.makedirs('output', exist_ok=True)
+    output_dir = 'carfusion_dataset'
+    os.makedirs(output_dir, exist_ok=True)
     for cat in ['car', 'bus', 'suv']:
-        os.makedirs(os.path.join('output', cat), exist_ok=True)
+        os.makedirs(os.path.join(output_dir, cat), exist_ok=True)
 
 
     COCO_DICT = {}
@@ -74,4 +75,4 @@ if __name__ == "__main__":
                 src_img, src_ann, split = search_match(bbox, num_keypoints, segmentation)
                 shutil.copyfile(
                     os.path.join(carfusion_dir_path, split, src_img),
-                    os.path.join('output', dst_file_name))
+                    os.path.join(output_dir, dst_file_name))

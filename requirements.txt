@@ -1,4 +1,4 @@
-numpy
+numpy==1.26.4
 googledrivedownloader
 shapely
 # glob3
@@ -10,3 +10,5 @@ matplotlib
 scikit-image
 xtcocotools
 tqdm
+gdown
+python-dotenv

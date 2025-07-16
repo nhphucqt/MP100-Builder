@@ -10,6 +10,7 @@ BASE_DIR = Path(SETTING_BASE_DIR)
 
 def validate_original_datasets():
     empty_dirs = set()
+    file_mapping = {}
 
     for split in SPLITS:
         print(f"Validating split: {split}")
@@ -35,47 +36,27 @@ def validate_original_datasets():
             assert found > 0, f"File {file_name} not found in any of the mapped directories for {dir_name}."
             assert found == 1, f"File {file_name} found in multiple directories: {found_in_dirs}."
 
+            if str(BASE_DIR / found_in_dirs[0] / file_name) not in file_mapping:
+                file_mapping[str(BASE_DIR / found_in_dirs[0] / file_name)] = set()
+            file_mapping[str(BASE_DIR / found_in_dirs[0] / file_name)].add(str(OUTPUT_DIR / item['file_name']))
+
+    # assert len(empty_dirs) == 0, f"Some directories are empty: {empty_dirs}"
+
     print("Validation completed successfully.")
     print(f"Empty directories: {empty_dirs}")
 
-def create_dataset():
+    return file_mapping
+
+def create_dataset(file_mapping):
     print("Creating dataset...")
 
-    empty_dirs = set()
-
-    for split in SPLITS:
-        print(f"Creating split: {split}")
-
-        with open(split, 'r') as f:
-            data = json.load(f)
-
-        for item in tqdm(data['images']):
-            # print(item['file_name'])
-            dir_name = item['file_name'].split('/')[0]
-            # print(dir_path)
-            file_name = item['file_name'].split('/')[-1]
-            assert dir_name in dir_mapping, f"Directory {dir_name} not found in mapping."
-
-            if len(dir_mapping[dir_name]) == 0:
-                # print(f"Directory {dir_name} has no paths in mapping.")
-                empty_dirs.add(dir_name)
-                continue
-            found = 0
-            found_in_dirs = []
-            for dir_p in dir_mapping[dir_name]:
-                assert (BASE_DIR / dir_p).exists(), f"Directory {dir_p} does not exist."
-                if (BASE_DIR / dir_p / file_name).exists():
-                    found += 1
-                    found_in_dirs.append(dir_p)
-                    break
-            assert found > 0, f"File {file_name} not found in any of the mapped directories for {dir_name}."
-            assert found == 1, f"File {file_name} found in multiple directories: {found_in_dirs}."
-
-            os.makedirs(OUTPUT_DIR / item['file_name'], exist_ok=True)
-            shutil.copy(BASE_DIR / found_in_dirs[0] / file_name, OUTPUT_DIR / item['file_name'])
+    for src, dsts in tqdm(file_mapping.items()):
+        for dst in dsts:
+            dst_dir = os.path.dirname(dst)
+            os.makedirs(dst_dir, exist_ok=True)
+            shutil.copyfile(src, dst)
 
     print("Dataset created successfully.")
-    print(f"Empty directories: {empty_dirs}")
 
 def validate_created_dataset():
     total_images = {}
@@ -97,6 +78,8 @@ def validate_created_dataset():
             total_images[dir_name] += 1
             if (OUTPUT_DIR / item['file_name']).exists():
                 count_images[dir_name] += 1
+            # else:
+            #     print(OUTPUT_DIR / item['file_name'], "does not exist.")
 
     print("Validation of created dataset completed successfully.")
     for dir_name, total in total_images.items():
@@ -106,31 +89,12 @@ def validate_created_dataset():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create dataset from MP100 splits')
-    # parser.add_argument('--base_dir', type=str, default=str(BASE_DIR), help='Base directory for dataset')
     parser.add_argument('--output_dir', type=str, default=str(BASE_DIR/'mp100'), help='Output directory for processed dataset')
     parser.add_argument('--mode', type=str, choices=['valid_org', 'create', 'valid'], help='Mode for processing dataset', required=True)
     args = parser.parse_args()
 
-    BASE_DIR = Path(args.base_dir)
     OUTPUT_DIR = Path(args.output_dir)
-
-    SPLITS = [
-        OUTPUT_DIR / 'annotations/mp100_split1_test.json', 
-        OUTPUT_DIR / 'annotations/mp100_split1_train.json', 
-        OUTPUT_DIR / 'annotations/mp100_split1_val.json', 
-        OUTPUT_DIR / 'annotations/mp100_split2_test.json',
-        OUTPUT_DIR / 'annotations/mp100_split2_train.json',
-        OUTPUT_DIR / 'annotations/mp100_split2_val.json',
-        OUTPUT_DIR / 'annotations/mp100_split3_test.json',
-        OUTPUT_DIR / 'annotations/mp100_split3_train.json',
-        OUTPUT_DIR / 'annotations/mp100_split3_val.json',
-        OUTPUT_DIR / 'annotations/mp100_split4_test.json',
-        OUTPUT_DIR / 'annotations/mp100_split4_train.json',
-        OUTPUT_DIR / 'annotations/mp100_split4_val.json',
-        OUTPUT_DIR / 'annotations/mp100_split5_test.json',
-        OUTPUT_DIR / 'annotations/mp100_split5_train.json',
-        OUTPUT_DIR / 'annotations/mp100_split5_val.json',
-    ]
+    SPLITS = OUTPUT_DIR.glob('annotations/*.json')
 
     with open(BASE_DIR / 'dir_mapping.json', 'r') as f:
         dir_mapping = json.load(f)
@@ -138,7 +102,12 @@ if __name__ == '__main__':
     if args.mode == 'valid_org':
         validate_original_datasets()
     elif args.mode == 'create':
-        create_dataset()
+        try:
+            file_mapping = validate_original_datasets()
+        except AssertionError as e:
+            print(f"Validation failed: {e}")
+            exit(1)
+        create_dataset(file_mapping)
     elif args.mode == 'valid':
         validate_created_dataset()
     else:

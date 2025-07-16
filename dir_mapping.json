@@ -364,8 +364,14 @@
     "human_face": [
         "300W/trainset"
     ],
-    "suv": [],
-    "bus": [],
-    "car": [],
+    "suv": [
+        "carfusion_dataset/suv"
+    ],
+    "bus": [
+        "carfusion_dataset/bus"
+    ],
+    "car": [
+        "carfusion_dataset/car"
+    ],
     "human_hand": []
 }
