@@ -26,7 +26,8 @@ def load_annotations(annotations_dir: pathlib.Path):
                 anno[file_name] = []
 
             anno[file_name].append({
-                'id': img_anno['id'],
+                'img_id': img_id,
+                'ann_id': img_anno['id'],
                 'annotation_filename': str(annotation_file),
                 'annotation_name': str(annotation_file.name).split('.')[0].split('_', 1)[-1],
                 'width': img_anno['width'],
@@ -42,6 +43,7 @@ def load_annotations(annotations_dir: pathlib.Path):
                     'id': obj['id'],
                     'bbox': [x, y, width, height],
                     'keypoints': np.array(obj['keypoints']).reshape(-1, 3).tolist(), # (x, y, visibility)
+                    'skeleton': coco.cats[obj['category_id']]['skeleton']
                 })
     
     return anno

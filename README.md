@@ -246,3 +246,17 @@ To visualize the dataset, you can use the provided visualization tools. The file
 ```bash
 python visualize/vis.py --dataset-dir mp100 --host 0.0.0.0 --port 8000
 ```
+
+This will start a web server that you can access in your browser at `http://localhost:8000`. You can view images, annotations, and other dataset details.
+
+### Demo images
+
+<center>
+<img src="resources/visualizer_demo_1.png" alt="Visualizer Demo 1" width="600">
+</center>
+<center>
+<img src="resources/visualizer_demo_2.png" alt="Visualizer Demo 2" width="600">
+</center>
+<center>
+<img src="resources/visualizer_demo_3.png" alt="Visualizer Demo 3" width="600">
+</center>
