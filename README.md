@@ -1,6 +1,6 @@
 # MP100 dataset builder
 
-This script provides instructions to download and prepare various datasets used in the MP100 project. It includes steps for downloading datasets like COCO 2017, 300W, AFLW, OneHand10K, DeepFashion2, AP-10K, MacaquePose, Vinegar Fly and Desert Locust datasets, CUB-200, CarFusion, AnimalWeb, Keypoint-5, and MP100 annotations.
+This script provides instructions to download and prepare various datasets used in the MP100 dataset. It includes steps for downloading datasets like COCO 2017, 300W, AFLW, OneHand10K, DeepFashion2, AP-10K, MacaquePose, Vinegar Fly and Desert Locust datasets, CUB-200, CarFusion, AnimalWeb, Keypoint-5, and MP100 annotations.
 
 The original instructions are available in the [MP100 repository](https://github.com/luminxu/Pose-for-Everything/tree/main/mp100).
 
