@@ -251,12 +251,12 @@ This will start a web server that you can access in your browser at `http://loca
 
 ### Demo images
 
-<center>
+<div align="center">
 <img src="resources/visualizer_demo_1.png" alt="Visualizer Demo 1" width="600">
-</center>
-<center>
+</div>
+<div align="center">
 <img src="resources/visualizer_demo_2.png" alt="Visualizer Demo 2" width="600">
-</center>
-<center>
+</div>
+<div align="center">
 <img src="resources/visualizer_demo_3.png" alt="Visualizer Demo 3" width="600">
-</center>
+</div>
