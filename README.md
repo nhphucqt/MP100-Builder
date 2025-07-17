@@ -9,7 +9,7 @@ The original instructions are available in the [MP100 repository](https://github
 Create a `.env` file in the repo directory, using the provided `.example.env` as a template:
 
 ```bash
-cp dataset/.example.env dataset/.env
+cp .example.env .env
 ```
 
 Install the required packages:
