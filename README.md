@@ -4,7 +4,7 @@ This script provides instructions to download and prepare various datasets used 
 
 The original instructions are available in the [MP100 repository](https://github.com/luminxu/Pose-for-Everything/tree/main/mp100).
 
-# Preparation
+## Preparation
 
 Create a `.env` file in the repo directory, using the provided `.example.env` as a template:
 
@@ -21,7 +21,7 @@ conda activate mp100
 pip install -r requirements.txt
 ```
 
-# Download COCO 2017 dataset
+## Download COCO 2017 dataset
 
 Link: https://cocodataset.org/#download
 
@@ -30,7 +30,7 @@ wget http://images.cocodataset.org/zips/train2017.zip
 unzip train2017.zip
 ```
 
-# Download 300W dataset
+## Download 300W dataset
 
 Link: https://ibug.doc.ic.ac.uk/resources/300-W/
 
@@ -38,7 +38,7 @@ Link: https://ibug.doc.ic.ac.uk/resources/300-W/
 python download_300w.py
 ```
 
-# Download AFLW dataset
+## Download AFLW dataset
 
 Link: https://www.tugraz.at/institute/icg/research/team-bischof/learning-recognition-surveillance/downloads/aflw
 
@@ -51,7 +51,7 @@ cd AFLW
 cd ..
 ```
 
-# Download OneHand10K dataset
+## Download OneHand10K dataset
 
 Link: https://www.yangangwang.com/papers/WANG-MCC-2018-10.html
 
@@ -61,7 +61,7 @@ Fill out the form to get the download link, then download the dataset:
 Soon^tm (until I get the link)
 ```
 
-# Download DeepFashion2 dataset
+## Download DeepFashion2 dataset
 
 Link: https://github.com/switchablenorms/DeepFashion2
 
@@ -81,7 +81,7 @@ unzip -P [password] validation.zip
 cd ..
 ```
 
-# Download AP-10K dataset
+## Download AP-10K dataset
 
 Link: https://github.com/AlexTheBad/AP-10K?tab=readme-ov-file#download
 
@@ -90,7 +90,7 @@ gdown --fuzzy 1-FNNGcdtAQRehYYkGY1y4wzFNg4iWNad
 unzip ap-10k.zip
 ```
 
-# Download MacaquePose dataset
+## Download MacaquePose dataset
 
 Link: https://www.pri.kyoto-u.ac.jp/datasets/macaquepose/index.html
 
@@ -99,7 +99,7 @@ wget https://www.pri.kyoto-u.ac.jp/datasets/macaquepose/download.php -O macaquep
 unzip macaquepose_v1.zip
 ```
 
-# Download Vinegar Fly and Desert Locust datasets
+## Download Vinegar Fly and Desert Locust datasets
 
 Link: https://github.com/jgraving/DeepPoseKit-Data
 
@@ -108,7 +108,7 @@ git clone https://www.github.com/jgraving/deepposekit-data.git
 python deepposekit_loader.py
 ``` 
 
-# Download CUB-200 dataset
+## Download CUB-200 dataset
 
 Link: https://www.vision.caltech.edu/datasets/cub_200_2011/
 
@@ -117,7 +117,7 @@ wget https://data.caltech.edu/records/65de6-vp158/files/CUB_200_2011.tgz
 tar -xvzf CUB_200_2011.tgz
 ```
 
-# Download CarFusion dataset
+## Download CarFusion dataset
 
 Link: http://www.cs.cmu.edu/~ILIM/projects/IM/CarFusion/cvpr2018/index.html
 
@@ -137,7 +137,7 @@ Rename the images names using [PoseAnything](https://github.com/orhir/PoseAnythi
 python fix_carfusion.py carfusion_to_coco/datasets/carfusion mp100/annotations
 ```
 
-# Download AnimalWeb dataset
+## Download AnimalWeb dataset
 
 Link: https://fdmaproject.wordpress.com/author/fdmaproject/
 
@@ -146,7 +146,7 @@ gdown --fuzzy 13PbHxUofhdJLZzql3TyqL22bQJ3HwDK4
 7z x animal_dataset_v1_c.rar # Extract the dataset
 ```
 
-# Download Keypoint-5 dataset
+## Download Keypoint-5 dataset
 
 Link: https://github.com/jiajunwu/3dinn
 
@@ -155,7 +155,7 @@ wget http://3dinterpreter.csail.mit.edu/data/keypoint-5.zip
 unzip keypoint-5.zip -d keypoint5
 ```
 
-# Download MP100 annotations
+## Download MP100 annotations
 
 Link: https://github.com/orhir/PoseAnything
 
@@ -169,7 +169,7 @@ mv Data annotations
 cd ..
 ```
 
-# Build the dataset
+## Build the dataset
 
 After downloading all datasets, the structure should look like this:
 
@@ -257,7 +257,7 @@ mp100/
 │   ├── ... (other categories)
 ```
 
-# Clean up
+## Clean up
 
 After creating the dataset, you can clean up the temporary directories and files:
 
@@ -265,7 +265,7 @@ After creating the dataset, you can clean up the temporary directories and files
 sh clean.sh
 ```
 
-# Visualization
+## Visualization
 
 To visualize the dataset, you can use the provided visualization tools. The file browser allows you to navigate through the dataset images and view annotations.
 
