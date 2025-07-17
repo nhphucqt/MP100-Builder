@@ -38,7 +38,7 @@ def validate_original_datasets():
 
             if str(BASE_DIR / found_in_dirs[0] / file_name) not in file_mapping:
                 file_mapping[str(BASE_DIR / found_in_dirs[0] / file_name)] = set()
-            file_mapping[str(BASE_DIR / found_in_dirs[0] / file_name)].add(str(OUTPUT_DIR / item['file_name']))
+            file_mapping[str(BASE_DIR / found_in_dirs[0] / file_name)].add(str(IMG_DIR / item['file_name']))
 
     # assert len(empty_dirs) == 0, f"Some directories are empty: {empty_dirs}"
 
@@ -80,10 +80,10 @@ def validate_created_dataset():
                 count_images[dir_name] = 0
 
             total_images[dir_name] += 1
-            if (OUTPUT_DIR / item['file_name']).exists():
+            if (IMG_DIR / item['file_name']).exists():
                 count_images[dir_name] += 1
             # else:
-            #     print(OUTPUT_DIR / item['file_name'], "does not exist.")
+            #     print(IMG_DIR / item['file_name'], "does not exist.")
 
     print("Validation of created dataset completed successfully.")
     for dir_name, total in total_images.items():
@@ -97,8 +97,9 @@ if __name__ == '__main__':
     parser.add_argument('--mode', type=str, choices=['valid_org', 'create', 'valid'], help='Mode for processing dataset', required=True)
     args = parser.parse_args()
 
-    OUTPUT_DIR = Path(args.output_dir)
-    SPLITS = OUTPUT_DIR.glob('annotations/*.json')
+    DATASET_DIR = Path(args.output_dir)
+    IMG_DIR = DATASET_DIR / 'images'
+    SPLITS = DATASET_DIR.glob('annotations/*.json')
 
     with open(BASE_DIR / 'dir_mapping.json', 'r') as f:
         dir_mapping = json.load(f)

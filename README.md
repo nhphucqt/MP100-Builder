@@ -231,6 +231,32 @@ Validate the dataset structure again to ensure everything is correct:
 python create_dataset.py --mode valid
 ```
 
+After creating the dataset, you should see the following structure in the `mp100` directory:
+
+```bash
+mp100/
+├── annotations
+│   ├── mp100_split1_test.json
+│   ├── mp100_split1_train.json
+│   ├── mp100_split1_val.json
+│   ├── ... (other splits)
+├── images
+│   ├── woodpecker_body
+│       ├── American_Three_Toed_Woodpecker_0018_179831.jpg
+│       ├── Red_Cockaded_Woodpecker_0003_794695.jpg
+│       ├── ... (other images)
+│   ├── pig_body
+│   ├── fox_body
+│   ├── fallowdeer_face
+│   ├── gibbons_face
+│   ├── sparrow_body
+│   ├── olivebaboon_face
+│   ├── antelope_body
+│   ├── gull_body
+│   ├── human_body
+│   ├── ... (other categories)
+```
+
 ## Clean up
 
 After creating the dataset, you can clean up the temporary directories and files:

@@ -63,11 +63,11 @@ def get_annotations(subpath: str = Path(..., description="Path to the annotation
 @app.get("/", response_class=HTMLResponse)
 @app.get("/browse/{subpath:path}", response_class=HTMLResponse)
 def browse(request: Request, subpath: str = ""):
-    abs_path = safe_join(DATASET_DIR, subpath)
+    abs_path = safe_join(IMG_DIR, subpath)
     items = []
     for name in os.listdir(abs_path):
         full_path = os.path.join(abs_path, name)
-        rel_path = os.path.relpath(full_path, DATASET_DIR)
+        rel_path = os.path.relpath(full_path, IMG_DIR)
         items.append({
             "name": name,
             "is_dir": os.path.isdir(full_path),
@@ -92,19 +92,21 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     DATASET_DIR = pathlib.Path(args.dataset_dir)
+    ANN_DIR = DATASET_DIR / 'annotations'
+    IMG_DIR = DATASET_DIR / 'images'
 
     if not DATASET_DIR.exists():
         raise ValueError(f"Dataset directory {DATASET_DIR} does not exist.")
 
     print(f"Starting server with dataset directory: {DATASET_DIR}")
 
-    annotation = load_annotations(DATASET_DIR / "annotations")
+    annotation = load_annotations(ANN_DIR)
 
     for file_name, anns in annotation.items():
         print(f"File: {file_name}, Annotations: {anns}")
         break
 
 
-    app.mount("/images", StaticFiles(directory=DATASET_DIR), name="images")
+    app.mount("/images", StaticFiles(directory=IMG_DIR), name="images")
 
     uvicorn.run("__main__:app", host=args.host, port=args.port)
