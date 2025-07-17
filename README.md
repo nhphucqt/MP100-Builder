@@ -104,7 +104,7 @@ unzip macaquepose_v1.zip
 Link: https://github.com/jgraving/DeepPoseKit-Data
 
 ```bash
-git clone git+https://www.github.com/jgraving/deepposekit-data
+git clone https://www.github.com/jgraving/deepposekit-data.git
 python deepposekit_loader.py
 ``` 
 

@@ -71,8 +71,6 @@ def validate_created_dataset():
             data = json.load(f)
 
         for item in tqdm(data['images']):
-            if item['file_name'] in file_names:
-                print(item['id'])
             # assert item['file_name'] not in file_names, f"Duplicate file name found: {item['file_name']}"
             file_names[item['file_name']] = item['id']
             dir_name = item['file_name'].split('/')[0]

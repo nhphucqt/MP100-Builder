@@ -13,3 +13,4 @@ tqdm
 gdown
 python-dotenv
 fastapi[standard]
+h5py
