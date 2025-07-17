@@ -312,6 +312,7 @@
                         if (obj.keypoints[start] && obj.keypoints[end]) {
                             const [x1, y1] = obj.keypoints[start];
                             const [x2, y2] = obj.keypoints[end];
+                            if (x1 == 0 && y1 == 0 || x2 == 0 && y2 == 0) continue; // Skip if keypoint is at (0, 0)
                             ctx.beginPath();
                             ctx.moveTo(x1 * scaleX, y1 * scaleY);
                             ctx.lineTo(x2 * scaleX, y2 * scaleY);
@@ -322,6 +323,7 @@
 
                 if (showKeypoints && obj.keypoints) {
                     obj.keypoints.forEach(([x, y, v], i) => {
+                        if (x == 0 && y == 0) return; // Skip if keypoint is at (0, 0)
                         const px = x * scaleX;
                         const py = y * scaleY;
                         ctx.beginPath();
