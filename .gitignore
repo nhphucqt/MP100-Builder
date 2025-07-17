@@ -1,6 +1,11 @@
 */
+
+!visualize/
+!visualize/*
+!resources/
+
+__pycache__/
+
 *.zip
 .env
-!visualize/
-!resources/
 log.txt

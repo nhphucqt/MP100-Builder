@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>File Browser</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        table { border-collapse: collapse; width: 60%; }
+        th, td { padding: 8px 12px; border-bottom: 1px solid #ddd; }
+        th { background: #f4f4f4; }
+        a { text-decoration: none; color: #0074d9; }
+        a:hover { text-decoration: underline; }
+        .icon { width: 18px; display: inline-block; text-align: center; }
+        .gallery-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 1em;
+        }
+        .gallery-item {
+            width: 120px;
+            text-align: center;
+        }
+        .gallery-item img {
+            max-width: 100px;
+            max-height: 80px;
+            display: block;
+            margin: 0 auto 8px auto;
+            cursor: pointer;
+        }
+        /* Popup styles */
+        .image-popup-overlay {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        .image-popup-content {
+            position: relative;
+            background: #fff;
+            padding: 16px;
+            border-radius: 8px;
+            max-width: 90vw;
+            max-height: 90vh;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .image-popup-img {
+            position: relative;
+            max-width: 80vw;
+            max-height: 70vh;
+            /* margin-bottom: 12px; */
+        }
+        .image-popup-close {
+            position: absolute;
+            top: -54px;
+            right: -54px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .image-popup-close ion-icon {
+            font-size: 48px;
+            color: red;
+            --ionicon-stroke-width: 16px;
+        }
+        .image-popup-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .image-popup-arrow ion-icon {
+            font-size: 48px;
+            color: white;
+        }
+        .image-popup-arrow.left { left: -54px; }
+        .image-popup-arrow.right { right: -54px; }
+        
+    </style>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <h2>File Browser - {{ subpath or 'Root Directory' }}</h2>
+    {% if parent is not none %}
+        <p><a href="{{ url_for('browse', subpath=parent) }}">&#8592; Parent Directory</a></p>
+    {% endif %}
+    {% if items and items[0].is_dir %}
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Preview</th>
+            </tr>
+            {% for item in items %}
+            <tr>
+                <td>
+                    {% if item.is_dir %}
+                        <span class="icon">&#128193;</span>
+                        <a href="{{ url_for('browse', subpath=item.rel_path) }}">{{ item.name }}/</a>
+                    {% else %}
+                        <span class="icon">&#128196;</span>
+                        {{ item.name }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if item.is_dir %}
+                        Directory
+                    {% else %}
+                        File
+                    {% endif %}
+                </td>
+                <td>
+                    {% if not item.is_dir and item.name.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')) %}
+                        <img src="{{ '/images/' + item.rel_path }}" alt="{{ item.name }}" style="max-height:60px; max-width:100px;" class="popup-image" data-index="{{ loop.index0 }}">
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="gallery-grid">
+            {% set image_items = [] %}
+            {% for item in items %}
+                {% if not item.is_dir and item.name.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')) %}
+                    {% set _ = image_items.append({'relpath': item.rel_path, 'src': '/images/' + item.rel_path, 'alt': item.name}) %}
+                {% endif %}
+            {% endfor %}
+            {% for img in image_items %}
+                <div class="gallery-item">
+                    <!-- <img src="{{ img.src }}" alt="{{ img.alt }}" class="popup-image" data-index="{{ loop.index0 }}"> -->
+                    <img src="{{ img.src }}" alt="{{ img.alt }}" class="popup-image" data-index="{{ loop.index0 }}" data-filename="{{ img.alt }}" data-relpath="{{ img.relpath }}">
+                </div>
+            {% endfor %}
+        </div>
+        <script>
+            // Pass image list to JS
+            window.galleryImages = [
+                {% for img in image_items %}
+                    {
+                        src: "{{ img.src }}",
+                        alt: "{{ img.alt | escape | replace('\\', '\\\\') | replace('"', '\\"') }}"
+                    }{% if not loop.last %},{% endif %}
+                {% endfor %}
+            ];
+        </script>
+    {% endif %}
+
+    <!-- Popup HTML -->
+    <div class="image-popup-overlay" id="imagePopup">
+        <div class="image-popup-content">
+            <button class="image-popup-close" id="popupClose" title="Close">
+                <ion-icon name="close-circle-sharp"></ion-icon>
+            </button>
+            <button class="image-popup-arrow left" id="popupPrev" title="Previous">
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+            <div id="popupImageWrapper" style="position: relative; display: inline-block;">
+                <img src="" alt="" class="image-popup-img" id="popupImg">
+                <canvas id="popupCanvas" style="position: absolute; top: 0; left: 0; pointer-events: none;"></canvas>
+            </div>
+            <button class="image-popup-arrow right" id="popupNext" title="Next">
+                <ion-icon name="arrow-forward"></ion-icon>
+            </button>
+            <div id="popupCaption" style="margin-top:8px;color:#555;"></div>
+
+            <div style="display: flex; gap: 8px; margin-top: 8px;">
+                <select id="annotationSelector"></select>
+                <button id="toggleBboxBtn">BB</button>
+                <button id="toggleKeypointBtn">KP</button>
+                <button id="toggleKeypointIndexBtn">KI</button>
+                <button id="toggleSkeletonBtn">SK</button>
+            </div>
+            <div style="margin-top: 8px;">
+                <label for="keypointSizeSlider">Keypoint Size:</label>
+                <input type="range" id="keypointSizeSlider" min="1" max="100" value="3">
+                <span id="keypointSizeValue">3</span>
+            </div>
+            <div style="margin-top: 4px;">
+                <label for="fontSizeSlider">Index Font Size:</label>
+                <input type="range" id="fontSizeSlider" min="6" max="100" value="12">
+                <span id="fontSizeValue">10</span>
+            </div>
+            <div style="margin-top: 4px;">
+                <label for="skeletonSlider">Skeleton Line Width:</label>
+                <input type="range" id="skeletonSlider" min="1" max="100" value="2">
+                <span id="skeletonLineWidthValue">2</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Collect images for popup (for both table and gallery)
+        let images = window.galleryImages;
+        if (!images) {
+            images = [];
+            document.querySelectorAll('.popup-image').forEach(function(img, idx) {
+                images.push({src: img.src, alt: img.alt});
+                img.setAttribute('data-index', idx);
+            });
+        }
+        // Popup logic
+        const popup = document.getElementById('imagePopup');
+        const popupImg = document.getElementById('popupImg');
+        const popupCaption = document.getElementById('popupCaption');
+        let currentIndex = 0;
+
+        function showPopup(idx) {
+            currentIndex = idx;
+            popupImg.src = images[idx].src;
+            popupImg.alt = images[idx].alt;
+            popupCaption.textContent = images[idx].alt;
+            popup.style.display = 'flex';
+        }
+        function closePopup() {
+            popup.style.display = 'none';
+            popupImg.src = '';
+        }
+        function showPrev() {
+            if (currentIndex > 0) {
+                showPopup(currentIndex - 1);
+            }
+        }
+        function showNext() {
+            if (currentIndex < images.length - 1) {
+                showPopup(currentIndex + 1);
+            }
+        }
+        document.querySelectorAll('.popup-image').forEach(function(img) {
+            img.addEventListener('click', function() {
+                showPopup(Number(img.getAttribute('data-index')));
+            });
+        });
+        document.getElementById('popupClose').onclick = closePopup;
+        document.getElementById('popupPrev').onclick = showPrev;
+        document.getElementById('popupNext').onclick = showNext;
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (popup.style.display === 'flex') {
+                if (e.key === 'ArrowLeft') showPrev();
+                if (e.key === 'ArrowRight') showNext();
+                if (e.key === 'Escape') closePopup();
+            }
+        });
+        // Hide arrows if at ends
+        function updateArrows() {
+            document.getElementById('popupPrev').style.display = currentIndex > 0 ? 'block' : 'none';
+            document.getElementById('popupNext').style.display = currentIndex < images.length - 1 ? 'block' : 'none';
+        }
+        // Update arrows on popup show
+        const origShowPopup = showPopup;
+        showPopup = function(idx) {
+            origShowPopup(idx);
+            updateArrows();
+        };
+    </script>
+    <script>
+        let showBbox = true;
+        let showKeypoints = true;
+        let showKeypointIndex = true;
+        let showSkeleton = true;
+        let keypointRadius = 3;
+        let keypointFontSize = 12;
+        let skeletonLineWidth = 2;
+        const canvas = document.getElementById('popupCanvas');
+        const ctx = canvas.getContext('2d');
+        const annotationSelector = document.getElementById('annotationSelector');
+
+        function resizeCanvas() {
+            const img = popupImg;
+            const canvas = document.getElementById('popupCanvas');
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            canvas.style.width = img.clientWidth + 'px';
+            canvas.style.height = img.clientHeight + 'px';
+        }
+
+        function drawAnnotations(oriWidth, oriHeight, objs) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (!objs) return;
+
+            // const scaleX = popupImg.clientWidth / oriWidth;
+            // const scaleY = popupImg.clientHeight / oriHeight;
+            const scaleX = 1;
+            const scaleY = 1;
+
+            console.log(`Drawing annotations for ${oriWidth}x${oriHeight} with scaleX: ${scaleX}, scaleY: ${scaleY}`);
+
+            objs.forEach(obj => {
+                // Draw bbox
+                if (showBbox && obj.bbox) {
+                    const [x, y, w, h] = obj.bbox;
+                    ctx.strokeStyle = 'red';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(x * scaleX, y * scaleY, w * scaleX, h * scaleY);
+                }
+
+                if (showSkeleton && obj.skeleton) {
+                    const skeleton = obj.skeleton;
+                    ctx.strokeStyle = 'green';
+                    ctx.lineWidth = skeletonLineWidth;
+                    for (let j = 0; j < skeleton.length; j++) {
+                        const [start, end] = skeleton[j];
+                        if (obj.keypoints[start] && obj.keypoints[end]) {
+                            const [x1, y1] = obj.keypoints[start];
+                            const [x2, y2] = obj.keypoints[end];
+                            ctx.beginPath();
+                            ctx.moveTo(x1 * scaleX, y1 * scaleY);
+                            ctx.lineTo(x2 * scaleX, y2 * scaleY);
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                if (showKeypoints && obj.keypoints) {
+                    obj.keypoints.forEach(([x, y, v], i) => {
+                        const px = x * scaleX;
+                        const py = y * scaleY;
+                        ctx.beginPath();
+                        ctx.arc(px, py, keypointRadius, 0, 2 * Math.PI);
+                        ctx.fillStyle = (v === 0) ? 'blue' : 'red';
+                        ctx.fill();
+                        ctx.lineWidth = keypointRadius;
+                        ctx.strokeStyle = 'black';
+                        ctx.stroke();
+                    });
+                }
+                
+                if (showKeypointIndex) {
+                    obj.keypoints.forEach(([x, y, v], i) => {
+                        const px = x * scaleX;
+                        const py = y * scaleY;
+                        ctx.beginPath();
+                        if (showKeypointIndex) {
+                            ctx.font = `${keypointFontSize}px Arial`;
+                            ctx.fillStyle = 'red';
+                            ctx.fillText(i.toString(), px + 3, py - 3);
+                        }
+                    });
+                }
+            });
+        }
+
+        function fetchAndDisplayAnnotations(filename) {
+            fetch(`/annotations/${filename}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) {
+                        annotationSelector.innerHTML = '<option>No annotations</option>';
+                        drawAnnotations(null, null, null);
+                        return;
+                    }
+
+                    annotationSelector.innerHTML = '';
+                    data.forEach((ann, idx) => {
+                        const option = document.createElement('option');
+                        option.value = idx;
+                        option.textContent = ann.annotation_name;
+                        option.width = ann.width;
+                        option.height = ann.height;
+                        annotationSelector.appendChild(option);
+                        console.log(`Image id: ${ann.img_id}`);
+                        console.log(`Annotation filename: ${ann.annotation_filename}`);
+                    });
+
+                    annotationSelector.onchange = () => drawAnnotations(  
+                        data[annotationSelector.value].width,
+                        data[annotationSelector.value].height,
+                        data[annotationSelector.value].objs
+                    );
+                    annotationSelector.dispatchEvent(new Event('change'));
+                });
+        }
+
+        document.getElementById('toggleBboxBtn').onclick = () => {
+            showBbox = !showBbox;
+            annotationSelector.dispatchEvent(new Event('change'));
+        };
+
+        document.getElementById('toggleKeypointBtn').onclick = () => {
+            showKeypoints = !showKeypoints;
+            annotationSelector.dispatchEvent(new Event('change'));
+        };
+
+        document.getElementById('toggleKeypointIndexBtn').onclick = () => {
+            showKeypointIndex = !showKeypointIndex;
+            annotationSelector.dispatchEvent(new Event('change'));
+        };
+
+        document.getElementById('toggleSkeletonBtn').onclick = () => {
+            showSkeleton = !showSkeleton;
+            annotationSelector.dispatchEvent(new Event('change'));
+        };
+
+        document.getElementById('keypointSizeSlider').addEventListener('input', (e) => {
+            keypointRadius = parseInt(e.target.value);
+            document.getElementById('keypointSizeValue').textContent = keypointRadius;
+            annotationSelector.dispatchEvent(new Event('change'));
+        });
+
+        document.getElementById('fontSizeSlider').addEventListener('input', (e) => {
+            keypointFontSize = parseInt(e.target.value);
+            document.getElementById('fontSizeValue').textContent = keypointFontSize;
+            annotationSelector.dispatchEvent(new Event('change'));
+        });
+
+        document.getElementById('skeletonSlider').addEventListener('input', (e) => {
+            skeletonLineWidth = parseInt(e.target.value);
+            document.getElementById('skeletonLineWidthValue').textContent = skeletonLineWidth
+            annotationSelector.dispatchEvent(new Event('change'));
+        });
+
+
+        const origShowPopupWithAnn = showPopup;
+        showPopup = function(idx) {
+            origShowPopupWithAnn(idx);
+            updateArrows();
+
+            const img = document.querySelector(`.popup-image[data-index="${idx}"]`);
+            const fileName = img.getAttribute('data-relpath');
+            fetchAndDisplayAnnotations(fileName);
+            resizeCanvas();
+        };
+
+        window.addEventListener('resize', resizeCanvas);
+        popupImg.onload = resizeCanvas;
+    </script>
+</body>
+</html>
