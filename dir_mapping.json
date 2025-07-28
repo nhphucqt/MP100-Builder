@@ -373,5 +373,7 @@
     "car": [
         "carfusion_dataset/car"
     ],
-    "human_hand": []
+    "human_hand": [
+        "OneHand10K/Train/source"
+    ]
 }

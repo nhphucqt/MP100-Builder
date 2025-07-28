@@ -65,7 +65,7 @@ def get_annotations(subpath: str = Path(..., description="Path to the annotation
 def browse(request: Request, subpath: str = ""):
     abs_path = safe_join(IMG_DIR, subpath)
     items = []
-    for name in os.listdir(abs_path):
+    for name in sorted(os.listdir(abs_path)):
         full_path = os.path.join(abs_path, name)
         rel_path = os.path.relpath(full_path, IMG_DIR)
         items.append({
@@ -92,7 +92,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     DATASET_DIR = pathlib.Path(args.dataset_dir)
-    ANN_DIR = DATASET_DIR / 'annotations'
+    ANN_DIR = DATASET_DIR / 'annotations_fixed'
     IMG_DIR = DATASET_DIR / 'images'
 
     if not DATASET_DIR.exists():

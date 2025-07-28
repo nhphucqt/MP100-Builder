@@ -181,6 +181,11 @@
                 <button id="toggleSkeletonBtn">SK</button>
             </div>
             <div style="margin-top: 8px;">
+                <label for="bboxWidthSlider">Bbox Width:</label>
+                <input type="range" id="bboxWidthSlider" min="1" max="100" value="3">
+                <span id="bboxWidthValue">3</span>
+            </div>
+            <div style="margin-top: 8px;">
                 <label for="keypointSizeSlider">Keypoint Size:</label>
                 <input type="range" id="keypointSizeSlider" min="1" max="100" value="3">
                 <span id="keypointSizeValue">3</span>
@@ -267,6 +272,7 @@
         let showKeypoints = true;
         let showKeypointIndex = true;
         let showSkeleton = true;
+        let bboxWidth = 3;
         let keypointRadius = 3;
         let keypointFontSize = 12;
         let skeletonLineWidth = 2;
@@ -299,7 +305,7 @@
                 if (showBbox && obj.bbox) {
                     const [x, y, w, h] = obj.bbox;
                     ctx.strokeStyle = 'red';
-                    ctx.lineWidth = 2;
+                    ctx.lineWidth = bboxWidth;
                     ctx.strokeRect(x * scaleX, y * scaleY, w * scaleX, h * scaleY);
                 }
 
@@ -401,6 +407,12 @@
             showSkeleton = !showSkeleton;
             annotationSelector.dispatchEvent(new Event('change'));
         };
+
+        document.getElementById('bboxWidthSlider').addEventListener('input', (e) => {
+            bboxWidth = parseInt(e.target.value);
+            document.getElementById('bboxWidthValue').textContent = bboxWidth;
+            annotationSelector.dispatchEvent(new Event('change'));
+        });
 
         document.getElementById('keypointSizeSlider').addEventListener('input', (e) => {
             keypointRadius = parseInt(e.target.value);

@@ -57,8 +57,9 @@ Link: https://www.yangangwang.com/papers/WANG-MCC-2018-10.html
 
 Fill out the form to get the download link, then download the dataset:
 
-```
-Soon^tm (until I get the link)
+```bash
+# Download the dataset zip file and place it here
+unzip OneHand10K.zip
 ```
 
 ## Download DeepFashion2 dataset
