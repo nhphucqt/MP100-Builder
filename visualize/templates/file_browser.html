@@ -268,6 +268,7 @@
         };
     </script>
     <script>
+        let lastSelectedAnnotation = null;
         let showBbox = true;
         let showKeypoints = true;
         let showKeypointIndex = true;
@@ -367,6 +368,11 @@
                         return;
                     }
 
+                    dataMap = {};
+                    data.forEach((ann, idx) => {
+                        dataMap[ann.annotation_filename] = idx;
+                    });
+
                     annotationSelector.innerHTML = '';
                     data.forEach((ann, idx) => {
                         const option = document.createElement('option');
@@ -377,13 +383,21 @@
                         annotationSelector.appendChild(option);
                         console.log(`Image id: ${ann.img_id}`);
                         console.log(`Annotation filename: ${ann.annotation_filename}`);
-                    });
+                    });                    
 
-                    annotationSelector.onchange = () => drawAnnotations(  
-                        data[annotationSelector.value].width,
-                        data[annotationSelector.value].height,
-                        data[annotationSelector.value].objs
-                    );
+                    if (lastSelectedAnnotation !== null && dataMap[lastSelectedAnnotation]) {
+                        annotationSelector.value = dataMap[lastSelectedAnnotation];
+                    }
+
+                    annotationSelector.onchange = (() => {
+                        drawAnnotations(
+                            data[annotationSelector.value].width,
+                            data[annotationSelector.value].height,
+                            data[annotationSelector.value].objs
+                        );
+                        lastSelectedAnnotation = data[annotationSelector.value].annotation_filename;
+                        console.log(`Selected annotation: ${lastSelectedAnnotation}`);
+                    });
                     annotationSelector.dispatchEvent(new Event('change'));
                 });
         }

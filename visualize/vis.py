@@ -17,7 +17,8 @@ templates = Jinja2Templates(directory="./visualize/templates")
 def load_annotations(annotations_dir: pathlib.Path):
     anno = {}
 
-    for annotation_file in annotations_dir.glob("*.json"):
+    for annotation_file in sorted(annotations_dir.glob("*.json")):
+        print(f"Loading annotations from {annotation_file}")
         coco = COCO(annotation_file)
         for img_id in coco.getImgIds():
             img_anno = coco.loadImgs(img_id)[0]
