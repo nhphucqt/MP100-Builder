@@ -93,7 +93,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     DATASET_DIR = pathlib.Path(args.dataset_dir)
-    ANN_DIR = DATASET_DIR / 'annotations_fixed'
+    ANN_DIR = DATASET_DIR / 'annotations'
     IMG_DIR = DATASET_DIR / 'images'
 
     if not DATASET_DIR.exists():

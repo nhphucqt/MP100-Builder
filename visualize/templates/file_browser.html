@@ -312,21 +312,32 @@
 
                 if (showSkeleton && obj.skeleton) {
                     const skeleton = obj.skeleton;
-                    ctx.strokeStyle = 'green';
+
                     ctx.lineWidth = skeletonLineWidth;
+
                     for (let j = 0; j < skeleton.length; j++) {
                         const [start, end] = skeleton[j];
-                        if (obj.keypoints[start] && obj.keypoints[end]) {
-                            const [x1, y1] = obj.keypoints[start];
-                            const [x2, y2] = obj.keypoints[end];
-                            if (x1 == 0 && y1 == 0 || x2 == 0 && y2 == 0) continue; // Skip if keypoint is at (0, 0)
-                            ctx.beginPath();
-                            ctx.moveTo(x1 * scaleX, y1 * scaleY);
-                            ctx.lineTo(x2 * scaleX, y2 * scaleY);
-                            ctx.stroke();
-                        }
+
+                        if (!obj.keypoints[start] || !obj.keypoints[end]) continue;
+
+                        const [x1, y1] = obj.keypoints[start];
+                        const [x2, y2] = obj.keypoints[end];
+
+                        // Skip if keypoint is at (0, 0)
+                        if ((x1 === 0 && y1 === 0) || (x2 === 0 && y2 === 0)) continue;
+
+                        // Color per edge index + transparency
+                        hue = (j * 137.508) % 360; // use golden angle approximation
+                        const alpha = 0.45;        // 0..1 (lower = more transparent)
+                        ctx.strokeStyle = `hsla(${hue}, 100%, 50%, ${alpha})`;
+
+                        ctx.beginPath();
+                        ctx.moveTo(x1 * scaleX, y1 * scaleY);
+                        ctx.lineTo(x2 * scaleX, y2 * scaleY);
+                        ctx.stroke();
                     }
                 }
+
 
                 if (showKeypoints && obj.keypoints) {
                     obj.keypoints.forEach(([x, y, v], i) => {
